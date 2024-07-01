@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProdottiService } from '../../services/prodotti.service';
 import { Prodotto } from '../../models/prodotto';
 
@@ -7,16 +7,21 @@ import { Prodotto } from '../../models/prodotto';
   templateUrl: './prodotti-vetrina.component.html',
   styleUrl: './prodotti-vetrina.component.css'
 })
-export class ProdottiVetrinaComponent implements OnInit {
+export class ProdottiVetrinaComponent implements OnInit, OnDestroy {
   prodotti: Prodotto[] = [];
 
-  // Dependency Injection
+  //Dependecy injection:è quel meccanismo che ha angular e ferve per dare a chi ne ha bisogno la stessa instanza di un oggetto in modo che sia condivisa per tutto il progetto
   constructor(private ps: ProdottiService) {
+
+  }
+  ngOnDestroy(): void {
 
   }
 
   ngOnInit(): void {
-    this.prodotti = this.ps.getProdotti();
+    this.ps.getProdotti().subscribe(dati => {
+      this.prodotti = dati;
+    });
 
   }
 }

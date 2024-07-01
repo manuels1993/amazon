@@ -1,4 +1,4 @@
-export interface Prodotto {
+export type Prodotto = {
     id: number
     title: string
     price: number
